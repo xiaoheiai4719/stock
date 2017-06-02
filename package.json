@@ -1,0 +1,10 @@
+{
+  "name": "stock",
+  "bin": {
+    "stock": "stock.js"
+  },
+  "dependencies": {
+    "shelljs": "^0.7.7",
+    "yargs": "^8.0.1"
+  }
+}
