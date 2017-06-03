@@ -11,27 +11,33 @@ var stockNumber = process.argv[2];
 //   if (err) throw err;
 //   console.log(stdout);
 // });
-
-var rule = new schedule.RecurrenceRule();
-var times = [];
-for(var i=1; i<60; i++){
-	times.push(i);
-}
-rule.second = times;
-var c=0;
-var j = schedule.scheduleJob(rule, function(){
-    http.get(sinaStockSite+stockNumber,function(req,res){
+ http.get(sinaStockSite+stockNumber,function(req,res){
 	var bufferHelper = new BufferHelper();
 
     req.on('data',function(data){  
     	bufferHelper.concat(data);
     });  
     req.on('end',function(){  
-    	console.log(iconv.decode(bufferHelper.toBuffer(),'GBK'));
-    	});  
-	})
+       var line  = iconv.decode(bufferHelper.toBuffer(),'GBK');
+       console.log(line[0]);
+       console.log(line[1]);
+       var data = line[1].split(",");
+       console.log(data);
+       // console.log(line);
+    });  
+})
+// var rule = new schedule.RecurrenceRule();
+// var times = [];
+// for(var i=1; i<60; i++){
+// 	times.push(i);
+// }
+// rule.second = 1;
+
+// var c=0;
+// var j = schedule.scheduleJob(rule, function(){
+   
     
-});
+// });
 
 
 
